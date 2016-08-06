@@ -1,0 +1,94 @@
+doctype html
+html(lang='en')
+  head
+    title= title
+    meta(charset="UTF-8")
+    script(src='https://code.jquery.com/jquery-3.1.0.min.js', integrity='sha256-cCueBR6CsyA4/9szpPfrX3s49M9vUU5BgtiJj06wt/s=', crossorigin='anonymous')
+    link(href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css", rel="stylesheet", integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u", crossorigin="anonymous")
+    link(href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css", rel="stylesheet", integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1", crossorigin="anonymous")
+    script(src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js", integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa", crossorigin="anonymous")
+    script(src="main.js")
+  body
+    h1.text-center Message Board
+    .container
+      .row
+        .col-xs-12
+          button.btn.btn-primary.center-block(type='button', data-toggle='modal', data-target='#messageModal', data-whatever='') Add Message
+    .container
+      .row
+        .col-xs-12
+          if infos.length
+            table.table.table-striped
+              thead
+                tr
+                  th Name
+                  th Message
+                  th Time
+                  th Edit
+                  th Delete
+              tbody#messageList
+                each info in infos
+                  tr(data-id= info.id)
+                    td.name= info.name
+                    td.message= info.message
+                    td.time= info.time
+                    td
+                      button.btn.btn-warning.btn-xs.edit(type='button', data-toggle='modal', data-target='#editMsgModal', data-whatever='')
+                        i.glyphicon.glyphicon-pencil
+                    td
+                      button.btn.btn-danger.btn-xs.delete
+                        i.glyphicon.glyphicon-trash
+    // add new message
+    #messageModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='exampleModalLabel')
+      .modal-dialog(role='document')
+        .modal-content
+          form#sendinfo
+            .modal-header
+              button.close(type='button', data-dismiss='modal', aria-label='Close')
+                span(aria-hidden='true') ×
+              h4#messageModalLabel.modal-title New message
+            .modal-body
+              .form-group
+                label.control-label(for='recipient-name') Name:
+                input.name.form-control(type='text')
+              .form-group
+                label.control-label(for='message-text') Message:
+                textarea.message-text.form-control
+            .modal-footer
+              button#newClose.btn.btn-default(type='button', data-dismiss='modal') Close
+              button.btn.btn-primary.sendMsg(type='button') Send Message
+
+
+    // edit message
+    #editMsgModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='exampleModalLabel')
+      .modal-dialog(role='document')
+        .modal-content
+          form#sendinfo
+            .modal-header
+              button.close(type='button', data-dismiss='modal', aria-label='Close')
+                span(aria-hidden='true') ×
+              h4#messageModalLabel.modal-title Edit Message
+            .modal-body
+              .form-group
+                label.control-label(for='recipient-name') Name:
+                input.name.form-control(type='text')
+              .form-group
+                label.control-label(for='message-text') Message:
+                textarea.message-text.form-control
+            .modal-footer
+              button#editClose.btn.btn-default(type='button', data-dismiss='modal') Close
+              button.btn.btn-primary.sendEditMsg(type='button') Edit Message
+
+  
+  table.table.table-striped.hidden
+    tr#template
+      td.name
+      td.message
+      td.time
+      td
+        button.btn.btn-warning.btn-xs.edit(type='button', data-toggle='modal', data-target='#editMsgModal', data-whatever='')
+          i.glyphicon.glyphicon-pencil
+      td
+        button.btn.btn-danger.btn-xs.delete
+          i.glyphicon.glyphicon-trash
+
